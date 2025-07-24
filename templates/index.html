@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Fancy Calculator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;  /* vertical center */
+            align-items: center;      /* horizontal center */
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .calc-button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            width: 300px;
+        }
+
+        .calc-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>The Fancy Calculator</h1>
+
+    <div class="button-container">
+        <a href="/fib" class="calc-button">Compute the n-th Fibonacci number</a>
+        <button class="calc-button">title_2</button>
+        <button class="calc-button">title_3</button>
+    </div>
+</body>
+</html>
