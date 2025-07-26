@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculate the n-th Fibonacci number</title>
+</head>
+<body>
+    <h1>Fibonacci operations:</h1>
+    <style>
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+    </style>
+    <div class="button-container">
+        <form action="/fib" method="post" style="text-align: center; margin-top: 20px;">
+            <button type="submit"
+            style="padding: 10px 20px; font-size: 1rem; border-radius: 5px; background-color: #4CAF50; color: white; border: none;">
+        Compute n-th Fibonacci number</button>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <label for="n1">Enter a number:</label>
+                <input type="number" id="n1" name="n" required min="0" step="1">
+            </div>
+        </form>
+        {% if fib_result is defined %}
+        <div style="margin-top: 20px;">
+            <p>The {{ n }}-th Fibonacci number is: {{ fib_result }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: fancy-calculator
+    command: python main.py
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "2025:2025"
+
