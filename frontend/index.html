@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Fancy Calculator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .calc-button {
+            width: 300px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .calc-button:hover {
+            background-color: #45a049;
+        }
+
+        .image-calculator {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: 10px;
+        }
+
+        .image-calculator img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        #result {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+    <h1>The Fancy Calculator</h1>
+
+    <div class="button-container">
+        <button class="calc-button" onclick="doFibonacci()">Compute the n-th Fibonacci number</button>
+        <button class="calc-button" onclick="doFactorial()">Compute the Factorial of a number</button>
+        <button class="calc-button" onclick="doPower()">Compute a<sup>b</sup></button>
+    </div>
+
+    <div id="result"></div>
+
+    <div class="image-calculator">
+        <img src="./calculator.png" alt="calculator image">
+    </div>
+
+    <script>
+        async function doFibonacci() {
+            const n = prompt("Enter a number n:");
+            if (n !== null) {
+                const response = await fetch(`http://localhost:2025/fibonacci?n=${n}`);
+                const data = await response.json();
+                document.getElementById('result').innerText = `Fibonacci(${n}) = ${data.result}`;
+            }
+        }
+
+        async function doFactorial() {
+            const n = prompt("Enter a number:");
+            if (n !== null) {
+                const response = await fetch(`http://localhost:2025/factorial?n=${n}`);
+                const data = await response.json();
+                document.getElementById('result').innerText = `${n}! = ${data.result}`;
+            }
+        }
+
+        async function doPower() {
+            const base = prompt("Enter base (a):");
+            const exp = prompt("Enter exponent (b):");
+            if (base !== null && exp !== null) {
+                const response = await fetch(`http://localhost:2025/pow?base=${base}&exp=${exp}`);
+                const data = await response.json();
+                document.getElementById('result').innerText = `${base}^${exp} = ${data.result}`;
+            }
+        }
+    </script>
+</body>
+</html>
