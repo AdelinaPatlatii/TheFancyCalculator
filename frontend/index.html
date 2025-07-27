@@ -74,39 +74,12 @@
     </div>
 
     <div id="result"></div>
+    <div id="error" style="color: red; margin-top: 10px;"></div>
 
     <div class="image-calculator">
         <img src="./calculator.png" alt="calculator image">
     </div>
 
-    <script>
-        async function doFibonacci() {
-            const n = prompt("Enter a number n:");
-            if (n !== null) {
-                const response = await fetch(`http://localhost:2025/fibonacci?n=${n}`);
-                const data = await response.json();
-                document.getElementById('result').innerText = `Fibonacci(${n}) = ${data.result}`;
-            }
-        }
-
-        async function doFactorial() {
-            const n = prompt("Enter a number:");
-            if (n !== null) {
-                const response = await fetch(`http://localhost:2025/factorial?n=${n}`);
-                const data = await response.json();
-                document.getElementById('result').innerText = `${n}! = ${data.result}`;
-            }
-        }
-
-        async function doPower() {
-            const base = prompt("Enter base (a):");
-            const exp = prompt("Enter exponent (b):");
-            if (base !== null && exp !== null) {
-                const response = await fetch(`http://localhost:2025/pow?base=${base}&exp=${exp}`);
-                const data = await response.json();
-                document.getElementById('result').innerText = `${base}^${exp} = ${data.result}`;
-            }
-        }
-    </script>
+    <script src="./script.js" defer></script>
 </body>
 </html>
