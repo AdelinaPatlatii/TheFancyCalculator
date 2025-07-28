@@ -60,7 +60,7 @@ async function doPower() {
                     showError(data.errors[0].msg);
                 }
             } else {
-                document.getElementById('result').innerText = `${base}^${exp} = ${data.result}`;
+                document.getElementById('result').innerHTML = `${base}<sup>${exp}</sup> = ${data.result}`;
             }
         } catch (err) {
             showError("Failed to connect to backend.");
