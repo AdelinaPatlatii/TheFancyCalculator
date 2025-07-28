@@ -1,6 +1,8 @@
 import logging
 
 factorial_cache = {}
+
+
 def fact(n: int) -> int:
     if n in factorial_cache:
         logging.info(f"[CACHE HIT] fact({n})")

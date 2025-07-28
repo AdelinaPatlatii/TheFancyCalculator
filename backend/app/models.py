@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Float, DateTime
 from datetime import datetime
 from .db import Base
 
+
 class CalculationRecord(Base):
     __tablename__ = "calculations"
 

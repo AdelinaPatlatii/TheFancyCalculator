@@ -8,7 +8,9 @@ from app.models import CalculationRecord
 from datetime import datetime
 import logging
 
-def log_error_to_db(operation: str, input_data: str, message: str, status_code: int):
+
+def log_error_to_db(operation: str, input_data: str, message: str,
+                    status_code: int):
     db = SessionLocal()
     try:
         record = CalculationRecord(
@@ -48,31 +50,35 @@ async def unified_handler(request: Request, exc: Exception):
         elif 'base' in input_data_dict and 'exp' in input_data_dict:
             input_data = f"base={dict(data)['base']},exp={dict(data)['exp']}"
         else:
-            input_data = f"Idk what this is: " + str(dict(data))
+            input_data = "Idk what this is: " + str(dict(data))
 
     if isinstance(exc, RequestValidationError):
         msg = "Invalid input"
         logging.warning(f"[VALIDATION ERROR] {exc} on {request.url}")
         log_error_to_db(operation, input_data, msg, 422)
-        return JSONResponse(status_code=422, content={"detail": msg, "errors": exc.errors()})
+        return JSONResponse(status_code=422, content={"detail": msg,
+                                                      "errors": exc.errors()})
 
     elif isinstance(exc, ValidationError):
         msg = "Validation failed"
         logging.warning(f"[PYDANTIC ERROR] {exc} on {request.url}")
         log_error_to_db(operation, input_data, msg, 422)
-        return JSONResponse(status_code=422, content={"detail": msg, "errors": exc.errors()})
+        return JSONResponse(status_code=422, content={"detail": msg,
+                                                      "errors": exc.errors()})
 
     elif isinstance(exc, StarletteHTTPException):
         msg = exc.detail
         logging.warning(f"[HTTP ERROR] {exc.status_code} on {request.url}")
         log_error_to_db(operation, input_data, msg, exc.status_code)
-        return JSONResponse(status_code=exc.status_code, content={"detail": msg})
+        return JSONResponse(status_code=exc.status_code,
+                            content={"detail": msg})
 
     else:
         msg = str(exc)
         logging.error(f"[UNEXPECTED ERROR] {exc} on {request.url}")
         log_error_to_db(operation, input_data, msg, 500)
-        return JSONResponse(status_code=500, content={"detail": "Internal server error"})
+        return JSONResponse(status_code=500,
+                            content={"detail": "Internal server error"})
 
 
 def register_exception_handlers(app):

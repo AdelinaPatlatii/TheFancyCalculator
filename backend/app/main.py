@@ -26,7 +26,7 @@ Base.metadata.create_all(bind=engine)
 instrumentator = Instrumentator()
 instrumentator.instrument(app).expose(app)
 
-# added logging (TO DO: might have to switch to logging via Redis in the future)
+# added logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",

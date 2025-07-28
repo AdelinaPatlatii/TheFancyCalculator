@@ -1,6 +1,7 @@
 import logging
 pow_cache = {}
 
+
 def power_calc(base: float, exp: int) -> float:
     key = (base, exp)
     if key in pow_cache:
@@ -22,4 +23,3 @@ def power_calc(base: float, exp: int) -> float:
 
     pow_cache[key] = result
     return result
-
