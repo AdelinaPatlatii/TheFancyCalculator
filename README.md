@@ -61,5 +61,5 @@ All API requests are logged, validated, cached, and persisted to a SQLite databa
    ```bash
    uvicorn backend.main:app --reload --port 2025
 
-2. **Visit the app in your browser**
+2. **Visit the app in your browser:**
    http://localhost:2025
