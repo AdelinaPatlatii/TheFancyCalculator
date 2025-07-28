@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query
-from backend.app.api import controllers
-from backend.app.schemas import FibonacciResponse, PowResponse, FactorialResponse
+from controllers import fib, pow, factorial_calc
+from ..schemas import FibonacciResponse, PowResponse, FactorialResponse
 
 router = APIRouter()
 

@@ -1,7 +1,7 @@
-from backend.app.services import nth_fibonacci, factorial, power
-from backend.app.schemas import FibonacciResponse, FactorialResponse, PowResponse
-from backend.app.models import CalculationRecord
-from backend.app.db import SessionLocal
+from ..services import nth_fibonacci, factorial, power
+from ..schemas import FibonacciResponse, FactorialResponse, PowResponse
+from ..models import CalculationRecord
+from ..db import SessionLocal
 from contextlib import contextmanager
 import logging
 

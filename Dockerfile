@@ -7,6 +7,8 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+ENV PYTHONPATH="/app"
+
 COPY . .
 
-CMD ["python", "main.py"]
+CMD ["python", "backend/app/main.py"]
