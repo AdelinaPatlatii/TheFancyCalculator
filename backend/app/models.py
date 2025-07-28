@@ -8,5 +8,7 @@ class CalculationRecord(Base):
     id = Column(Integer, primary_key=True, index=True)
     operation = Column(String, index=True)
     input_data = Column(String)
-    result = Column(Float)
+    result = Column(Float, nullable=True)
+    error_message = Column(String, nullable=True)
+    status_code = Column(Integer, nullable=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
