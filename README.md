@@ -49,6 +49,37 @@ All API requests are logged, validated, cached, and persisted to a SQLite databa
 └── docker-compose.yml               # (Optional) for full stack orchestration
 ```
 
+
+---
+
+## Features
+
+- FastAPI backend with REST endpoints
+- HTML + JavaScript frontend UI
+- SQLite persistence of all requests and errors
+- Exception handling with error logging to database and logs
+- Prometheus monitoring on `/metrics`
+- Redis-based caching (optional)
+- Docker-ready setup
+
+---
+
+## Database Setup
+
+This project uses **SQLite** to persist all API requests, results, and errors.
+
+- The database file `calculator.db` is **automatically created on first run** — no manual setup is needed.
+- It stores:
+  - Operation name (e.g., `"fibonacci"`, `"pow"`)
+  - Input parameters (e.g., `"n=5"`)
+  - Result (or `null` if there was an error)
+  - Error message (if any)
+  - HTTP status code (e.g., `200`, `422`)
+  - Timestamp
+
+To inspect the DB manually, run the following command:
+<pre> sqlite3 calculator.db </pre>
+
 ---
 
 ## Getting Started
