@@ -14,7 +14,7 @@ app.include_router(router)
 # CORS config
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://127.0.0.1:2025"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
