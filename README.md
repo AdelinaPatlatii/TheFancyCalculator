@@ -82,15 +82,18 @@ To inspect the DB manually, run the following command:
 
 ---
 
-## Getting Started
+## Running the App (with Docker Compose)
 
-1. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
+1. **Clone the repository and navigate to the directory** `TheFancyCalculator`:
+    ```bash
+   git clone https://github.com/AdelinaPatlatii/TheFancyCalculator.git
+   cd TheFancyCalculator
+
+2. **Make sure you have Docker Compose v2+ installed**
    
-2. **Start the FastAPI server**
+3. **Start the service (build + run):**
    ```bash
-   uvicorn backend.main:app --reload --port 2025
+   docker compose up --build
 
-2. **Visit the app in your browser:**
+4. **Visit the app in your browser:**
    http://localhost:2025

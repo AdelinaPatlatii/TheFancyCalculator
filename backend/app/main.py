@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 import logging
 from starlette.middleware.cors import CORSMiddleware
-from api.routes import router
+from app.api.routes import router
 import uvicorn
-from db import Base, engine
+from app.db import Base, engine
 from fastapi.staticfiles import StaticFiles
 from prometheus_fastapi_instrumentator import Instrumentator
-from exceptions import register_exception_handlers
+from app.exceptions import register_exception_handlers
 
 app = FastAPI()
 app.include_router(router)

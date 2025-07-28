@@ -3,8 +3,8 @@ from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from pydantic import ValidationError
 from fastapi.responses import JSONResponse
-from db import SessionLocal
-from models import CalculationRecord
+from app.db import SessionLocal
+from app.models import CalculationRecord
 from datetime import datetime
 import logging
 
