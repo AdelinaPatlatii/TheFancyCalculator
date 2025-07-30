@@ -45,8 +45,8 @@ All API requests are logged, validated, cached, and persisted to a SQLite databa
 │   ├── scripts.js                   # client-side logic
 │   └── calculator.png
 ├── requirements.txt                 # Python dependencies
-├── Dockerfile                       # (Optional) for containerization
-└── docker-compose.yml               # (Optional) for full stack orchestration
+├── Dockerfile
+└── docker-compose.yml
 ```
 
 

@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from fastapi import FastAPI
 import logging
 from starlette.middleware.cors import CORSMiddleware
@@ -27,6 +29,10 @@ instrumentator = Instrumentator()
 instrumentator.instrument(app).expose(app)
 
 # added logging
+log_file_path = Path("backend/app/log/requests.log")
+log_file_path.parent.mkdir(parents=True, exist_ok=True)
+log_file_path.touch(exist_ok=True)
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",
