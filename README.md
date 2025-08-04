@@ -1,6 +1,6 @@
 # 🧮 The Fancy Calculator
 
-This is a production-style **microservice** built using **FastAPI**, designed to expose mathematical operations via an HTTP API and a lightweight HTML frontend.
+This is a production-style **microservice** built using **FastAPI**, designed to expose mathematical operations via an HTTP API and a lightweight HTML frontend with secure user authentication.
 
 It supports:
 - Computation of the **n-th Fibonacci number**
@@ -13,14 +13,15 @@ All API requests are logged, validated, cached, and persisted to a SQLite databa
 
 ## Features:
 
-- FastAPI-based microservice
-- Exposes an HTML frontend and REST endpoints
-- Uses **Pydantic** for serialization and validation
-- Caching
-- Request persistence with **SQLite**
-- Monitoring via Prometheus-compatible `/metrics` endpoint
-- Logging
-- Error handling and input validation
+- FastAPI backend with REST endpoints
+- HTML + JavaScript frontend UI
+- JWT authentication using `python-jose`
+- Signup/Login UI
+- SQLite persistence of all requests and errors
+- Exception handling with custom database logging
+- Prometheus monitoring on `/metrics`
+- Dictionary-based caching
+- Docker-ready setup
 
 ---
 
@@ -29,7 +30,8 @@ All API requests are logged, validated, cached, and persisted to a SQLite databa
 .
 ├── backend/
 │   ├── api/
-│   │   ├── controllers.py           # Request handlers and business logic
+│   │   ├── controllers.py           # Request handler for the calculator page
+│   │   ├── auth.py                  # Request handler for the login/signup pages
 │   │   └── routes.py                # API routes
 │   ├── services/
 │   │   ├── fibonacci.py             # Fibonacci implementation + caching
@@ -38,29 +40,21 @@ All API requests are logged, validated, cached, and persisted to a SQLite databa
 │   ├── models.py                    # SQLAlchemy DB models
 │   ├── schemas.py                   # Pydantic request/response schemas
 │   ├── db.py                        # SQLite DB setup
+│   ├── config.py
 │   ├── exceptions.py                # Global exception handling
 │   └── main.py                      # app entrypoint
 ├── frontend/
-│   ├── index.html                   # Main entry page
-│   ├── scripts.js                   # client-side logic
-│   └── calculator.png
+│   ├── index.html                   # Calculator page
+│   ├── calculator.js                # Client-side logic for the calculator page
+│   ├── login.html                   # Login page
+│   ├── login.js                     # Client-side logic for the login page
+│   ├── signup.html                  # Signup page
+│   └── calculator_image.png
 ├── requirements.txt                 # Python dependencies
 ├── Dockerfile
 └── docker-compose.yml
 ```
 
-
----
-
-## Features
-
-- FastAPI backend with REST endpoints
-- HTML + JavaScript frontend UI
-- SQLite persistence of all requests and errors
-- Exception handling with error logging to database and logs
-- Prometheus monitoring on `/metrics`
-- Redis-based caching (optional)
-- Docker-ready setup
 
 ---
 
@@ -70,12 +64,12 @@ This project uses **SQLite** to persist all API requests, results, and errors.
 
 - The database file `calculator.db` is **automatically created on first run** — no manual setup is needed.
 - It stores:
-  - Operation name (e.g., `"fibonacci"`, `"pow"`)
+  - Operation names (e.g., `"fibonacci"`, `"pow"`)
   - Input parameters (e.g., `"n=5"`)
-  - Result (or `null` if there was an error)
-  - Error message (if any)
+  - Outputs (or `null` if there was an error)
+  - Error messages (if any)
   - HTTP status code (e.g., `200`, `422`)
-  - Timestamp
+  - Timestamps
 
 To inspect the DB manually, run the following command:
 <pre> sqlite3 calculator.db </pre>
