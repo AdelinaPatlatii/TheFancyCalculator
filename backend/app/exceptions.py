@@ -51,7 +51,7 @@ async def unified_handler(request: Request, exc: Exception):
             data = {}
     except Exception:
         data = {}
-    print(data)
+
     input_data = "Input data is either None or Empty"
     if data:
         input_data_dict = dict(data)

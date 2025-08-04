@@ -1,9 +1,12 @@
 from fastapi import APIRouter, Query
 from app.api import controllers
 from app.schemas import FibonacciResponse, PowResponse, FactorialResponse, \
-    UserCreate, UserLogin
+    UserCreate, UserLogin, Token
 from fastapi.responses import RedirectResponse
 from app.api import auth
+from app.api.auth import get_current_user
+from fastapi import Depends
+from app.models import User
 
 
 router = APIRouter()
@@ -19,9 +22,14 @@ def signup(user: UserCreate):
     return auth.signup_user(user)
 
 
-@router.post("/login")
+@router.post("/login", response_model=Token)
 def login(user: UserLogin):
     return auth.authenticate_user(user)
+
+
+@router.get("/protected")
+def protected_example(current_user: User = Depends(get_current_user)):
+    return {"message": f"Hello, {current_user.username}! This route is protected."}
 
 
 @router.get("/fibonacci", response_model=FibonacciResponse)

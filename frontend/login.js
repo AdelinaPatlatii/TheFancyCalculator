@@ -13,7 +13,8 @@ async function login() {
 
     const data = await response.json();
 
-    if (response.ok && data.message === "User authenticated!") {
+    if (response.ok && data.access_token) {
+      localStorage.setItem("token", data.access_token);
       window.location.href = "/index.html";
     } else {
       alert("Invalid credentials!");
