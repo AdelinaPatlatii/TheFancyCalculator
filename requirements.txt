@@ -7,3 +7,5 @@ prometheus_fastapi_instrumentator
 aiofiles
 backend
 pathlib
+passlib[bcrypt]
+bcrypt<4.0.0

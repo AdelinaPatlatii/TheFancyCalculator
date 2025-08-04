@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - The Fancy Calculator</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top left, #eaf3f9 20%, #d4e3ef 40%, #c9ddea 60%, #bcd3e4 80%, #a8c6dc 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeInUp 0.8s ease-in-out;
+    }
+
+    .login-box {
+      background-color: white;
+      padding: 35px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 12px 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 12px 24px;
+      background-color: #B3A289;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #A19072;
+      transform: scale(1.03);
+    }
+
+    .signup-link {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      color: #555;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+    }
+
+    .text-button {
+      background: none;
+      border: none;
+      color: #3366cc;
+      cursor: pointer;
+      font-size: 0.95rem;
+      text-decoration: underline;
+      padding: 0;
+    }
+
+    .text-button:hover {
+      color: #003399;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h1>Login</h1>
+
+    <input id="username" placeholder="Username" required />
+    <input id="password" type="password" placeholder="Password" required />
+    <button onclick="login()">Log In</button>
+    <script src="login.js"></script>
+
+    <div class="signup-link">
+      <span>Don't have an account?</span>
+      <button type="button" class="text-button" onclick="signup()">Sign up</button>
+    </div>
+
+  </div>
+
+  <script defer>
+    function signup() {
+      const width = 400;
+      const height = 400;
+      const left = (window.screen.width - width) / 2;
+      const top = (window.screen.height - height) / 2;
+
+      window.open(
+        "./signup.html",
+        "SignupWindow",
+        `width=${width},height=${height},left=${left},top=${top},resizable=no`
+      );
+    }
+
+  </script>
+
+</body>
+</html>

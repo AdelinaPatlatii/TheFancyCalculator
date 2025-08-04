@@ -1,5 +1,5 @@
 from fastapi import Request
-from fastapi.exceptions import RequestValidationError
+from fastapi.exceptions import RequestValidationError, HTTPException
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from pydantic import ValidationError
 from fastapi.responses import JSONResponse
@@ -46,11 +46,13 @@ async def unified_handler(request: Request, exc: Exception):
     if data:
         input_data_dict = dict(data)
         if 'n' in input_data_dict:
-            input_data = f"n={dict(data)['n']}"
+            input_data = f"n={input_data_dict['n']}"
         elif 'base' in input_data_dict and 'exp' in input_data_dict:
-            input_data = f"base={dict(data)['base']},exp={dict(data)['exp']}"
+            input_data = f"base={input_data_dict['base']},exp={input_data_dict['exp']}"
+        elif 'username' in input_data_dict:
+            input_data = f"username={input_data_dict['username']}"
         else:
-            input_data = "Idk what this is: " + str(dict(data))
+            input_data = "Other input: " + str(input_data_dict)
 
     if isinstance(exc, RequestValidationError):
         msg = "Invalid input"
@@ -67,11 +69,17 @@ async def unified_handler(request: Request, exc: Exception):
                                                       "errors": exc.errors()})
 
     elif isinstance(exc, StarletteHTTPException):
+        status = exc.status_code
         msg = exc.detail
-        logging.warning(f"[HTTP ERROR] {exc.status_code} on {request.url}")
-        log_error_to_db(operation, input_data, msg, exc.status_code)
-        return JSONResponse(status_code=exc.status_code,
-                            content={"detail": msg})
+
+        if status == 401:
+            msg = "Invalid credentials"
+        elif status == 409:
+            msg = "Username already taken"
+
+        logging.warning(f"[HTTP ERROR] {status} on {request.url} — {msg}")
+        log_error_to_db(operation, input_data, msg, status)
+        return JSONResponse(status_code=status, content={"detail": msg})
 
     else:
         msg = str(exc)

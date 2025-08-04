@@ -1,8 +1,27 @@
 from fastapi import APIRouter, Query
 from app.api import controllers
-from app.schemas import FibonacciResponse, PowResponse, FactorialResponse
+from app.schemas import FibonacciResponse, PowResponse, FactorialResponse, \
+    UserCreate, UserLogin
+from fastapi.responses import RedirectResponse
+from app.api import auth
+
 
 router = APIRouter()
+
+
+@router.get("/", include_in_schema=False)
+def redirect_to_login():
+    return RedirectResponse(url="/login")
+
+
+@router.post("/signup")
+def signup(user: UserCreate):
+    return auth.signup_user(user)
+
+
+@router.post("/login")
+def login(user: UserLogin):
+    return auth.authenticate_user(user)
 
 
 @router.get("/fibonacci", response_model=FibonacciResponse)

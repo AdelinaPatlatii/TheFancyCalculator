@@ -9,8 +9,18 @@ from app.db import Base, engine
 from fastapi.staticfiles import StaticFiles
 from prometheus_fastapi_instrumentator import Instrumentator
 from app.exceptions import register_exception_handlers
+from fastapi.responses import HTMLResponse
+from fastapi.requests import Request
 
 app = FastAPI()
+
+@app.get("/login", response_class=HTMLResponse, include_in_schema=False)
+async def login_page(request: Request):
+    html_path = Path("frontend/login.html")
+    if not html_path.exists():
+        return HTMLResponse(status_code=404, content="Login page not found")
+    return HTMLResponse(content=html_path.read_text(), status_code=200)
+
 app.include_router(router)
 
 # CORS config
