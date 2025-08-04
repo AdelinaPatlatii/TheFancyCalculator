@@ -1,10 +1,10 @@
 from fastapi import Request
-from fastapi.exceptions import RequestValidationError, HTTPException
+from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from pydantic import ValidationError
 from fastapi.responses import JSONResponse
 from app.db import SessionLocal
-from app.models import CalculationRecord
+from app.models import RequestRecord
 from datetime import datetime
 import logging
 
@@ -13,10 +13,10 @@ def log_error_to_db(operation: str, input_data: str, message: str,
                     status_code: int):
     db = SessionLocal()
     try:
-        record = CalculationRecord(
+        record = RequestRecord(
             operation=operation,
-            input_data=input_data,
-            result=None,
+            input=input_data,
+            output=None,
             error_message=message,
             status_code=status_code,
             timestamp=datetime.utcnow()
@@ -34,14 +34,24 @@ async def unified_handler(request: Request, exc: Exception):
     operation = operation_path[1:]
     try:
         if request.method == "POST":
-            data = await request.form()
+            try:
+                content_type = request.headers.get("content-type", "").lower()
+                if "application/json" in content_type:
+                    data = await request.json()
+                elif "application/x-www-form-urlencoded" in content_type or \
+                        "multipart/form-data" in content_type:
+                    data = await request.form()
+                else:
+                    data = {}
+            except Exception:
+                data = {}
         elif request.method == "GET":
             data = dict(request.query_params)
         else:
             data = {}
     except Exception:
         data = {}
-
+    print(data)
     input_data = "Input data is either None or Empty"
     if data:
         input_data_dict = dict(data)

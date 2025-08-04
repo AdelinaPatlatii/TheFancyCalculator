@@ -2,14 +2,14 @@ from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
 from datetime import datetime
 from .db import Base
 
-class CalculationRecord(Base):
-    __tablename__ = "calculations"
+class RequestRecord(Base):
+    __tablename__ = "http_requests"
 
     cid = Column(Integer, primary_key=True, index=True)
     uid = Column(Integer, ForeignKey("users.uid"), nullable=True)
     operation = Column(String, index=True)
-    input_data = Column(String)
-    result = Column(Float, nullable=True)
+    input = Column(String)
+    output = Column(String, nullable=True)
     error_message = Column(String, nullable=True)
     status_code = Column(Integer, nullable=True)
     timestamp = Column(DateTime, default=datetime.utcnow)

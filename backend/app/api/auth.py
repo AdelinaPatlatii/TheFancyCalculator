@@ -5,8 +5,7 @@ from passlib.context import CryptContext
 from fastapi import HTTPException
 from contextlib import contextmanager
 from app.schemas import UserCreate, UserLogin
-
-from app.models import CalculationRecord
+from app.models import RequestRecord
 
 
 @contextmanager
@@ -30,9 +29,9 @@ def signup_user(input_user: UserCreate):
             raise HTTPException(status_code=400,
                                 detail="Username already occupied")
         db.add(User(username=input_user.username, hashed_password=hashed_pw))
-        db.add(CalculationRecord(operation="login",
-                                 error_message=f"User {input_user.username} "
-                                               + "created", status_code=200))
+        db.add(RequestRecord(operation="login",
+                             input=f"Username={input_user.username}",
+                             output=f"User created", status_code=200))
         db.commit()
     logging.info(f"User added to database")
     return {"message": "User created successfully!"}
@@ -47,8 +46,8 @@ def authenticate_user(input_user: UserLogin):
                                           user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     logging.info(f"User authenticated")
-    db.add(CalculationRecord(operation="login",
-                             error_message=f"User {input_user.username} "
-                                           + "authenticated", status_code=200))
+    db.add(RequestRecord(operation="login",
+                         input=f"Username={input_user.username}",
+                         output=f"User authenticated", status_code=200))
     db.commit()
     return {"message": "User authenticated!"}
