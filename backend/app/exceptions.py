@@ -59,6 +59,10 @@ async def unified_handler(request: Request, exc: Exception):
             input_data = f"n={input_data_dict['n']}"
         elif 'base' in input_data_dict and 'exp' in input_data_dict:
             input_data = f"base={input_data_dict['base']},exp={input_data_dict['exp']}"
+        elif 'a' in input_data_dict and 'b' in input_data_dict:
+            input_data = f"a={input_data_dict['a']},b={input_data_dict['b']}"
+        elif 'base' in input_data_dict and 'value' in input_data_dict:
+            input_data = f"base={input_data_dict['base']},value={input_data_dict['value']}"
         elif 'username' in input_data_dict:
             input_data = f"username={input_data_dict['username']}"
         else:

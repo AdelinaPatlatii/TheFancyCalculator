@@ -13,6 +13,18 @@ class PowResponse(BaseModel):
     result: float
 
 
+class GCDResponse(BaseModel):
+    result: int
+
+
+class LCMResponse(BaseModel):
+    result: int
+
+
+class LogResponse(BaseModel):
+    result: float
+
+
 class UserCreate(BaseModel):
     username: str
     password: str

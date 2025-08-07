@@ -15,7 +15,7 @@ async function login() {
 
     if (response.ok && data.access_token) {
       localStorage.setItem("token", data.access_token);
-      window.location.href = "/index.html";
+      window.location.href = "/calculator.html";
     } else {
       alert("Invalid credentials!");
     }

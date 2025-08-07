@@ -30,12 +30,28 @@
             padding: 30px 25px;
             border-radius: 16px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            max-width: 420px;
+            max-width: 700px;
             width: 90%;
             max-height: calc(100vh - 100px); /* prevent it from touching the footer */
             overflow-y: auto;
             box-sizing: border-box;
             animation: fadeInUp 0.8s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 2rem; /* spacing between containers */
+            margin-bottom: 2rem;
+        }
+
+        .button-container-1,
+        .button-container-2 {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem; /* spacing between buttons */
         }
 
         h1 {
@@ -51,7 +67,14 @@
             margin-bottom: 40px;
         }
 
-        .button-container {
+        .button-container-1 {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .button-container-2 {
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -158,10 +181,17 @@
         <h1>The Fancy Calculator</h1>
         <h2>Select an operation to begin:</h2>
 
-        <div class="button-container">
-            <button class="calc-button" onclick="doFibonacci()">Compute the n-th Fibonacci number</button>
-            <button class="calc-button" onclick="doFactorial()">Compute the Factorial of a number</button>
-            <button class="calc-button" onclick="doPower()">Compute a<sup>b</sup></button>
+        <div class="button-row">
+            <div class="button-container-1">
+                <button class="calc-button" onclick="doFibonacci()">Compute the n-th Fibonacci number</button>
+                <button class="calc-button" onclick="doFactorial()">Compute the Factorial of a number</button>
+                <button class="calc-button" onclick="doPower()">Compute a<sup>b</sup></button>
+            </div>
+            <div class="button-container-2">
+                <button class="calc-button" onclick="doLogarithm()">Compute log<sub>a</sub>b</button>
+                <button class="calc-button" onclick="doGCD()">Compute the greatest common divisor of a and b</button>
+                <button class="calc-button" onclick="doLCM()">Compute the least common multiple of a and b</button>
+            </div>
         </div>
 
         <div id="result"></div>

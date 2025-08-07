@@ -1,5 +1,4 @@
 from pathlib import Path
-
 from fastapi import FastAPI
 import logging
 from starlette.middleware.cors import CORSMiddleware
@@ -10,12 +9,13 @@ from fastapi.staticfiles import StaticFiles
 from prometheus_fastapi_instrumentator import Instrumentator
 from app.exceptions import register_exception_handlers
 from fastapi.responses import HTMLResponse
-from fastapi.requests import Request
+
 
 app = FastAPI()
 
+
 @app.get("/login", response_class=HTMLResponse, include_in_schema=False)
-async def login_page(request: Request):
+async def login_page():
     html_path = Path("frontend/login.html")
     if not html_path.exists():
         return HTMLResponse(status_code=404, content="Login page not found")
