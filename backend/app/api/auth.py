@@ -20,6 +20,7 @@ def get_db():
     finally:
         db.close()
 
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
@@ -27,19 +28,22 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
 def create_access_token(data: dict, expires_delta: timedelta = None) -> str:
     to_encode = data.copy()
-    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    expire = datetime.utcnow() + \
+        (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
 def signup_user(input_user: UserCreate):
-    hashed_pw = pwd_context.hash(input_user.password)
+    hash_pw = pwd_context.hash(input_user.password)
     with get_db() as db:
-        existing = db.query(User).filter(User.username == input_user.username).first()
+        existing = db.query(User).filter(
+            User.username == input_user.username).first()
         if existing:
-            raise HTTPException(status_code=400, detail="Username already occupied")
+            raise HTTPException(status_code=400,
+                                detail="Username already occupied")
 
-        new_user = User(username=input_user.username, hashed_password=hashed_pw)
+        new_user = User(username=input_user.username, hashed_password=hash_pw)
         db.add(new_user)
         db.add(RequestRecord(operation="login",
                              input=f"Username={input_user.username}",
@@ -51,9 +55,11 @@ def signup_user(input_user: UserCreate):
 
 def authenticate_user(input_user: UserLogin):
     with get_db() as db:
-        user = db.query(User).filter(User.username == input_user.username).first()
+        user = db.query(User).filter(
+            User.username == input_user.username).first()
 
-        if not user or not pwd_context.verify(input_user.password, user.hashed_password):
+        if not user or not pwd_context.verify(input_user.password,
+                                              user.hashed_password):
             raise HTTPException(status_code=401, detail="Invalid credentials")
 
         db.add(RequestRecord(operation="login",

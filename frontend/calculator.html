@@ -27,12 +27,12 @@
 
         .main-box {
             background-color: white;
-            padding: 30px 25px;
+            padding: 25px 20px;
             border-radius: 16px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             max-width: 700px;
             width: 90%;
-            max-height: calc(100vh - 100px); /* prevent it from touching the footer */
+            max-height: calc(100vh - 130px); / * prevent it from touching the footer */
             overflow-y: auto;
             box-sizing: border-box;
             animation: fadeInUp 0.8s ease-in-out;
@@ -124,7 +124,7 @@
         }
 
         #result {
-            margin-top: 30px;
+            margin-top: 15px;
             font-size: 1.2rem;
             color: #222;
         }
@@ -132,6 +132,7 @@
         #error {
             color: red;
             margin-top: 10px;
+            margin-bottom: 15px;
         }
 
         footer {
@@ -167,6 +168,24 @@
                 width: 90%;
             }
         }
+
+        .logout-button {
+            margin-top: 10px;
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            background-color: #a85555;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .logout-button:hover {
+            background-color: #943f3f;
+        }
+
     </style>
 </head>
 <body>
@@ -197,6 +216,7 @@
         <div id="result"></div>
         <div id="error"></div>
     </div>
+    <button class="logout-button" onclick="logout()">Log Out</button>
 
     <footer>© 2025 The Fancy Calculator</footer>
 
@@ -206,5 +226,12 @@
     </div>
 
     <script src="./calculator.js" defer></script>
+    <script>
+      function logout() {
+        localStorage.removeItem("token");
+        window.location.href = "/login.html";
+      }
+    </script>
+
 </body>
 </html>

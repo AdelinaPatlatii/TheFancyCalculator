@@ -8,7 +8,6 @@ from app.api.auth import get_current_user
 from fastapi import Depends
 from app.models import User
 
-
 router = APIRouter()
 
 
@@ -29,7 +28,8 @@ def login(user: UserLogin):
 
 @router.get("/protected")
 def protected_example(current_user: User = Depends(get_current_user)):
-    return {"message": f"Hello, {current_user.username}! This route is protected."}
+    return {
+        "message": f"Hello, {current_user.username}! This route is protected."}
 
 
 @router.get("/fibonacci", response_model=FibonacciResponse)
@@ -38,7 +38,7 @@ def compute_fibonacci(n: int = Query(..., ge=0)):
 
 
 @router.get("/pow", response_model=PowResponse)
-def compute_power(base: int = Query(...), exp: int = Query(...)):
+def compute_power(base: float = Query(...), exp: float = Query(...)):
     return controllers.pow_calc(base, exp)
 
 
@@ -47,16 +47,16 @@ def compute_factorial(n: int = Query(..., ge=0)):
     return controllers.factorial_calc(n)
 
 
-@router.get("/gcd", response_model=PowResponse)
-def compute_power(a: int = Query(..., ge=0), b: int = Query(..., ge=0)):
+@router.get("/gcd", response_model=GCDResponse)
+def compute_gcd(a: int = Query(..., ge=0), b: int = Query(..., ge=0)):
     return controllers.gcd_calc(a, b)
 
 
-@router.get("/lcm", response_model=PowResponse)
-def compute_power(a: int = Query(..., ge=0), b: int = Query(..., ge=0)):
+@router.get("/lcm", response_model=LCMResponse)
+def compute_lcm(a: int = Query(..., ge=0), b: int = Query(..., ge=0)):
     return controllers.lcm_calc(a, b)
 
 
 @router.get("/logarithm", response_model=LogResponse)
-def compute_power(base: float = Query(...), value: float = Query(...)):
+def compute_logarithm(base: float = Query(...), value: float = Query(...)):
     return controllers.log_calc(base, value)

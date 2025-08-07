@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from datetime import datetime
 from .db import Base
+
 
 class RequestRecord(Base):
     __tablename__ = "http_requests"
@@ -14,10 +15,10 @@ class RequestRecord(Base):
     status_code = Column(Integer, nullable=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
 
+
 class User(Base):
     __tablename__ = "users"
 
     uid = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
-

@@ -4,6 +4,7 @@ from app.schemas import FibonacciResponse, FactorialResponse, PowResponse, \
 from app.models import RequestRecord
 from app.db import SessionLocal
 from contextlib import contextmanager
+from fastapi import HTTPException
 import logging
 
 
@@ -36,8 +37,12 @@ def factorial_calc(n: int) -> FactorialResponse:
     return FactorialResponse(result=result)
 
 
-def pow_calc(base: int, exp: int) -> PowResponse:
-    result = power.power_calc(base, exp)
+def pow_calc(base: float, exp: float) -> PowResponse:
+    try:
+        result = power.power_calc(base, exp)
+    except ValueError as e:
+        logging.warning(f"[INPUT ERROR] {e}")
+        raise HTTPException(status_code=400, detail=str(e))
     logging.info(f"{base}^{exp} = {result}")
     with get_db() as db:
         db.add(RequestRecord(operation="pow",
