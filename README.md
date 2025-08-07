@@ -6,6 +6,9 @@ It supports:
 - Computation of the **n-th Fibonacci number**
 - Computation of the **factorial** of a number
 - Computation of **a<sup>b</sup>** in logarithmic time!
+- Computation of **log<sub>a</sub>b**
+- Computation of the **greatest common divisor** of two numbers
+- Computation of the **least common multiple** of two numbers
 
 All API requests are logged, validated, cached, and persisted to a SQLite database.
 
@@ -47,7 +50,7 @@ All API requests are logged, validated, cached, and persisted to a SQLite databa
 │   ├── exceptions.py                # Global exception handling
 │   └── main.py                      # app entrypoint
 ├── frontend/
-│   ├── index.html                   # Calculator page
+│   ├── calculator.html              # Calculator page
 │   ├── calculator.js                # Client-side logic for the calculator page
 │   ├── login.html                   # Login page
 │   ├── login.js                     # Client-side logic for the login page
