@@ -34,8 +34,11 @@ All API requests are logged, validated, cached, and persisted to a SQLite databa
 │   │   ├── auth.py                  # Request handler for the login/signup pages
 │   │   └── routes.py                # API routes
 │   ├── services/
-│   │   ├── fibonacci.py             # Fibonacci implementation + caching
+│   │   ├── nth_fibonacci.py         # Fibonacci implementation + caching
 │   │   ├── factorial.py             # Factorial logic + caching
+│   │   ├── gcd.py                   # greatest common divisor of any two positive integers + caching
+│   │   ├── lcm.py                   # least common multiple of any two positive integers + caching
+│   │   ├── logarithm.py             # logarithm computation + caching
 │   │   └── power.py                 # Log-time exponentiation + caching
 │   ├── models.py                    # SQLAlchemy DB models
 │   ├── schemas.py                   # Pydantic request/response schemas
@@ -82,12 +85,26 @@ To inspect the DB manually, run the following command:
     ```bash
    git clone https://github.com/AdelinaPatlatii/TheFancyCalculator.git
    cd TheFancyCalculator
-
-2. **Make sure you have Docker Compose v2+ installed**
    
-3. **Start the service (build + run):**
+2. **Create your `.env` file based on the provided template:**
+    ```bash
+   cp .env.example .env
+- For local development, you can use simple values like:
+   ```bash
+  SECRET_KEY=calculator
+  ALGORITHM=HS256
+  ACCESS_TOKEN_EXPIRE_MINUTES=30
+
+3. **Make sure you have Docker Compose v2+ installed:**
+
+    To verify:
+   ```bash
+   docker compose version
+
+4. **Start the service (build + run):**
    ```bash
    docker compose up --build
 
-4. **Visit the app in your browser:**
+5. **Visit the app in your browser:**
+
    http://localhost:2025

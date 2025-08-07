@@ -18,21 +18,29 @@ def get_db():
 
 
 def fib(n: int) -> FibonacciResponse:
-    result = nth_fibonacci.nth_fib(n)
+    try:
+        result = nth_fibonacci.nth_fib(n)
+    except ValueError as e:
+        logging.warning(f"[INPUT ERROR] {e}")
+        raise HTTPException(status_code=400, detail=str(e))
     logging.info(f"Fibonacci({n}) = {result}")
     with get_db() as db:
         db.add(RequestRecord(operation="fibonacci", input=f"n={n}",
-                             output=result, status_code=200))
+                             output=str(result), status_code=200))
         db.commit()
     return FibonacciResponse(result=result)
 
 
 def factorial_calc(n: int) -> FactorialResponse:
-    result = factorial.fact(n)
+    try:
+        result = factorial.fact(n)
+    except ValueError as e:
+        logging.warning(f"[INPUT ERROR] {e}")
+        raise HTTPException(status_code=400, detail=str(e))
     logging.info(f"Factorial({n}) = {result}")
     with get_db() as db:
         db.add(RequestRecord(operation="factorial", input=f"n={n}",
-                             output=result, status_code=200))
+                             output=str(result), status_code=200))
         db.commit()
     return FactorialResponse(result=result)
 
@@ -47,13 +55,17 @@ def pow_calc(base: float, exp: float) -> PowResponse:
     with get_db() as db:
         db.add(RequestRecord(operation="pow",
                              input=f"base={base},exp={exp}",
-                             output=result, status_code=200))
+                             output=str(result), status_code=200))
         db.commit()
     return PowResponse(result=result)
 
 
 def gcd_calc(a: int, b: int) -> GCDResponse:
-    result = gcd.gcd(a, b)
+    try:
+        result = gcd.gcd(a, b)
+    except ValueError as e:
+        logging.warning(f"[INPUT ERROR] {e}")
+        raise HTTPException(status_code=400, detail=str(e))
     logging.info(f"GCD({a}, {b}) = {result}")
     with get_db() as db:
         db.add(
@@ -64,22 +76,30 @@ def gcd_calc(a: int, b: int) -> GCDResponse:
 
 
 def lcm_calc(a: int, b: int) -> LCMResponse:
-    result = lcm.lcm(a, b)
+    try:
+        result = lcm.lcm(a, b)
+    except ValueError as e:
+        logging.warning(f"[INPUT ERROR] {e}")
+        raise HTTPException(status_code=400, detail=str(e))
     logging.info(f"LCM({a}, {b}) = {result}")
     with get_db() as db:
         db.add(
-            RequestRecord(operation="lcm", input=f"a={a},b={b}", output=result,
-                          status_code=200))
+            RequestRecord(operation="lcm", input=f"a={a},b={b}",
+                          output=str(result), status_code=200))
         db.commit()
     return LCMResponse(result=result)
 
 
 def log_calc(base: float, value: float) -> LogResponse:
-    result = logarithm.log_base(base, value)
+    try:
+        result = logarithm.log_base(base, value)
+    except ValueError as e:
+        logging.warning(f"[INPUT ERROR] {e}")
+        raise HTTPException(status_code=400, detail=str(e))
     logging.info(f"log base {base} of {value} = {result}")
     with get_db() as db:
         db.add(
             RequestRecord(operation="log", input=f"base={base},value={value}",
-                          output=result, status_code=200))
+                          output=str(result), status_code=200))
         db.commit()
     return LogResponse(result=result)
