@@ -23,3 +23,11 @@ async function login() {
     alert("Login failed: " + err.message);
   }
 }
+
+
+window.addEventListener("message", (event) => {
+  if (event.data?.type === "signup-success" && event.data.token) {
+    localStorage.setItem("token", event.data.token);
+    window.location.href = "/calculator.html";
+  }
+});

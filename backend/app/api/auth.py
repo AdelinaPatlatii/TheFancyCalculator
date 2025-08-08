@@ -50,7 +50,8 @@ def signup_user(input_user: UserCreate):
                              output="User created", status_code=200))
         db.commit()
     logging.info(f"User '{input_user.username}' added to database")
-    return {"message": "User created successfully!"}
+    access_token = create_access_token(data={"sub": input_user.username})
+    return {"access_token": access_token, "token_type": "bearer"}
 
 
 def authenticate_user(input_user: UserLogin):

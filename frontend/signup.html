@@ -73,6 +73,7 @@
     <br />
     <button onclick="submitSignup()">Submit</button>
     <button onclick="window.close()">Cancel</button>
+    <p id="signup-success" style="color: green; font-size: 0.95rem; margin-top: 10px;"></p>
   </div>
   <script>
     function togglePassword() {
@@ -98,12 +99,16 @@
           body: JSON.stringify({ username, password }),
         });
 
-        if (response.ok) {
-          alert("Signup successful!");
-          window.opener.location.href = "/calculator.html";
-          window.close();
+        const data = await response.json();
+
+        if (response.ok && data.access_token) {
+          document.getElementById("signup-success").innerText = "Signup successful! Redirecting...";
+          window.opener.postMessage({ type: "signup-success", token: data.access_token }, "*");
+
+          setTimeout(() => {
+            window.close();
+          }, 2500); // 1000ms = 1 second delay
         } else {
-          const data = await response.json();
           alert("Signup failed: " + (data.detail || "Unknown error"));
         }
       } catch (error) {
